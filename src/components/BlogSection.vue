@@ -1,0 +1,24 @@
+<script setup lang="ts">
+import { onMounted, ref, watch } from 'vue'
+import { getCategories, getPosts, type BlogCategory, type BlogPost } from '../services/blog'
+
+const emit = defineEmits<{ openPost: [slug: string] }>()
+const selectedCategory = ref<string | null>(null)
+const posts = ref<BlogPost[]>([])
+const categories = ref<BlogCategory[]>([])
+const isLoadingPosts = ref(false)
+const isLoadingCategories = ref(false)
+const error = ref('')
+const currentPage = ref(1)
+const lastPage = ref(1)
+
+function formatDate(date: string | null) { return date ? new Intl.DateTimeFormat('es-VE', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(date)) : '' }
+async function loadPosts(page = 1) { isLoadingPosts.value = true; error.value = ''; try { const result = await getPosts(selectedCategory.value ?? undefined, page); posts.value = result.data; currentPage.value = result.currentPage; lastPage.value = result.lastPage } catch (requestError) { posts.value = []; error.value = requestError instanceof Error ? requestError.message : 'No fue posible cargar las publicaciones.' } finally { isLoadingPosts.value = false } }
+async function loadCategories() { isLoadingCategories.value = true; try { categories.value = await getCategories() } catch (requestError) { error.value = requestError instanceof Error ? requestError.message : 'No fue posible cargar las categorías.' } finally { isLoadingCategories.value = false } }
+watch(selectedCategory, () => void loadPosts(1))
+onMounted(() => { void loadPosts(); void loadCategories() })
+</script>
+
+<template>
+  <section id="blog" class="py-5 bg-cream"><div class="container py-lg-4"><div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4"><div><span class="text-cavitur-orange text-uppercase fw-bold letter-spacing-2 small">ACTUALIDAD & CONSEJOS</span><h2 class="display-6 fw-bold text-dark-green mt-1 mb-0">Blog del Agente Turístico</h2></div><div class="d-flex flex-wrap gap-2 mt-3 mt-md-0"><button class="btn btn-sm rounded-pill px-3 fw-semibold" :class="selectedCategory === null ? 'btn-cavitur-green' : 'btn-outline-secondary bg-white'" :disabled="isLoadingCategories" @click="selectedCategory = null">Todos</button><button v-for="category in categories" :key="category.slug" class="btn btn-sm rounded-pill px-3 fw-semibold" :class="selectedCategory === category.slug ? 'btn-cavitur-green' : 'btn-outline-secondary bg-white'" :disabled="isLoadingCategories" @click="selectedCategory = category.slug">{{ category.name }} ({{ category.postsCount }})</button></div></div><div v-if="isLoadingPosts" class="py-5 text-center text-muted"><span class="spinner-border spinner-border-sm me-2"></span>Cargando publicaciones...</div><div v-else-if="error" class="alert alert-warning">{{ error }} <button class="btn btn-sm btn-outline-secondary ms-2" @click="loadPosts(currentPage)">Reintentar</button></div><div v-else-if="!posts.length" class="py-5 text-center text-muted">No hay publicaciones disponibles para esta categoría.</div><div v-else class="row g-4"><div v-for="post in posts" :key="post.id" class="col-md-6 col-lg-4"><article class="card border-0 shadow-sm rounded-4 overflow-hidden h-100 blog-card"><div v-if="post.image" class="blog-img-box"><img :src="post.image" :alt="post.title" class="w-100 h-100 object-fit-cover" /><span v-if="post.category" class="badge bg-cavitur-orange position-absolute top-0 start-0 m-3 px-3 py-2 rounded-pill">{{ post.category.name }}</span></div><div class="card-body p-4 d-flex flex-column"><div class="d-flex justify-content-between text-muted small mb-2"><span v-if="post.publishedAt"><i class="bi bi-calendar3 me-1"></i>{{ formatDate(post.publishedAt) }}</span><span v-if="post.readingTime"><i class="bi bi-clock me-1"></i>{{ post.readingTime }}</span></div><h5 class="fw-bold text-dark-green mb-2">{{ post.title }}</h5><p class="text-muted small mb-4 flex-grow-1">{{ post.excerpt }}</p><button class="btn btn-link p-0 text-start text-cavitur-green fw-bold text-decoration-none small hover-orange mt-auto" @click="emit('openPost', post.slug)">Leer Artículo Completo <i class="bi bi-arrow-right ms-1"></i></button></div></article></div></div><nav v-if="lastPage > 1" class="d-flex justify-content-center align-items-center gap-3 mt-5"><button class="btn btn-outline-cavitur-green" :disabled="currentPage === 1" @click="loadPosts(currentPage - 1)">Anterior</button><span class="small text-muted">Página {{ currentPage }} de {{ lastPage }}</span><button class="btn btn-outline-cavitur-green" :disabled="currentPage === lastPage" @click="loadPosts(currentPage + 1)">Siguiente</button></nav></div></section>
+</template>
