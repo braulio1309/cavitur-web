@@ -1,13 +1,12 @@
 <template>
   <header class="top-announcement py-2 text-white">
-    <div class="container d-flex justify-content-between align-items-center small">
-      <div><span class="badge bg-cavitur-orange me-2 text-white px-2 py-1">CENTRO ALIADO</span><span class="d-none d-md-inline text-white-50">Conectamos agentes freelance y agencias con el ecosistema turístico global.</span></div>
+    <div class="container d-flex justify-content-end align-items-center small">
       <a href="https://wa.me/" target="_blank" class="text-white text-decoration-none hover-orange"><i class="bi bi-whatsapp text-success me-1"></i> Soporte Aliados</a>
     </div>
   </header>
   <nav class="navbar navbar-expand-lg sticky-top bg-white border-bottom py-3">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2" href="#inicio"><img src="/cavitur-logo1.png" alt="CAVITUR" class="brand-logo" /></a>
+      <a class="navbar-brand d-flex flex-column align-items-start gap-0" href="#inicio"><img src="/cavitur-logo1.png" alt="CAVITUR" class="brand-logo" /><span class="brand-subtitle">Centro aliado de viajes y turismo</span></a>
       <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"><span class="navbar-toggler-icon"></span></button>
       <div class="collapse navbar-collapse" id="navMenu">
         <ul class="navbar-nav ms-auto me-lg-4 mb-2 mb-lg-0 gap-lg-3 fw-medium">
