@@ -9,9 +9,9 @@ const services = [
   ['bi-ticket-perforated-fill', 'Consolidación Aérea', 'Emisión inmediata y soporte en cambios, cancelaciones y reemisiones con las principales aerolíneas del mundo.', 'GDS & NDC Ready'],
   ['bi-building', 'Hotelería & Circuitos', 'Inventario directo en más de 300,000 hoteles globales y paquetes turísticos organizados con operadores de primer nivel.', 'Tarifas Netas B2B'],
   ['bi-shield-check', 'Asistencia al Viajero', 'Planes de cobertura médica internacional con comisiones preferenciales y emisión al instante para tus pasajeros.', 'Cobertura Global'],
-  ['bi-mortarboard-fill', 'Academia CAVITUR', 'Webinars semanales, certificaciones de destino y talleres prácticos de ventas digitales para agentes de viajes.', 'Capacitación Continua'],
+  ['bi-mortarboard-fill', 'Academia CAVITUR', 'Formación integral para profesionales. Accede a certificaciones, webinars y herramientas digitales diseñadas para optimizar tus servicios.', 'Capacitación Continua'],
   ['bi-laptop', 'Herramientas Digitales', 'Acceso a cotizadores rápidos, plantillas de itinerarios y recursos de marketing listos para personalizar con tu marca.', 'Marketing Kit'],
-  ['bi-headset', 'Mesa de Ayuda B2B', 'Un equipo de ejecutivos expertos listo para resolver cotizaciones de grupos, charters y requerimientos especiales.', 'Atención Personalizada'],
+  ['bi-headset', 'Soporte Estratégico B2B', 'Un equipo especializado que acompaña a nuestros aliados con atención personalizada, asesoría experta y soluciones estratégicas.', 'Atención Personalizada'],
 ]
 </script>
 
