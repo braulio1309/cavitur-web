@@ -3,6 +3,7 @@ export interface ContactRequest {
   email: string
   phone: string
   profile_type: string
+  interests: string[]
   message: string
 }
 
